@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Requests\Note;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreNoteRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'section_id' => 'required|exists:sections,id',
+            'type' => 'required|in:code,finance,note,reminder',
+            'content' => 'required|string',
+            'reminder_at' => 'nullable|date',
+        ];
+    }
+}
