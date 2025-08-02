@@ -33,22 +33,29 @@ class SectionController extends Controller
         );
     }
 
-    public function show(Section $section)
+    public function show(Section $section, Request $request)
     {
-        $this->authorize('view', $section);
+        if ($section->user_id !== $request->user()->id) {
+            abort(403, 'Forbidden');
+        }
         return $section;
     }
 
     public function update(UpdateSectionRequest $request, Section $section)
     {
-        $this->authorize('update', $section);
-        return $this->service->update($section, $request->validated());
+        if ($section->user_id !== $request->user()->id) {
+            abort(403, 'Forbidden');
+        }
+        $section->update($request->validated());
+        return $section;
     }
 
-    public function destroy(Section $section)
+    public function destroy(Section $section, Request $request)
     {
-        $this->authorize('delete', $section);
-        $this->service->delete($section);
+        if ($section->user_id !== $request->user()->id) {
+            abort(403, 'Forbidden');
+        }
+        $section->delete();
         return response()->noContent();
     }
 }
