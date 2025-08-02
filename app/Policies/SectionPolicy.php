@@ -8,6 +8,8 @@ use Illuminate\Auth\Access\Response;
 
 class SectionPolicy
 {
+    public function create(User $user) { return true; }
+
     public function view(User $user, Section $section)
     {
         return $user->id === $section->user_id;
