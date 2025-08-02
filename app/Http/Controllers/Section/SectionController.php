@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
-    use AuthorizesRequests;
     protected $service;
 
     public function __construct(SectionService $service)
